@@ -31,7 +31,7 @@ export const loadRecipe = async function(id) {
   }
 };
 
-export const leadSearchResults = async function(query) {
+export const loadSearchResults = async function(query) {
   try {
     state.search.query = query;
     const data = await getJSON(`${API_URL}?search=${query}`);
@@ -44,6 +44,7 @@ export const leadSearchResults = async function(query) {
         image: recipe.image_url
       };
     });
+    state.search.page = 1;
   } catch (error) {
     throw error;
   }

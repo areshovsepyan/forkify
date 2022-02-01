@@ -17,10 +17,13 @@ const controlRecipes = async function() {
     if (!id) return;
     recipeView.renderSpinner();
 
-    // 1. Loading the recipe
+    // 1. Update results view to mark selected search result
+    resultsView.update(model.getSearchResultsPage());
+
+    // 2. Loading the recipe
     await model.loadRecipe(id);
 
-    // 2. Rendering the recipe
+    // 3. Rendering the recipe
     recipeView.render(model.state.recipe);
 
   } catch (error) {

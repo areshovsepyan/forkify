@@ -11,7 +11,6 @@ import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 
 
-
 const controlRecipes = async function() {
   try {
     const id = window.location.hash.slice(1);
@@ -19,7 +18,7 @@ const controlRecipes = async function() {
     if (!id) return;
     recipeView.renderSpinner();
 
-    // 1. Update results view to mark selected search result and bookmark
+    // 1. Update results view to mark selected search result and bookmarks
     resultsView.update(model.getSearchResultsPage());
     bookmarksView.update(model.state.bookmarks);
 
@@ -52,8 +51,6 @@ const controlSearchResults = async function() {
 
     // 4. Render the initial pagination buttons
     paginationView.render(state.search);
-
-
   } catch (error) {
     throw error;
   }
@@ -85,7 +82,12 @@ const controlAddBookmark = function() {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlBookmarks = function() {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 const init = function() {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
@@ -94,4 +96,8 @@ const init = function() {
 };
 init();
 
+const clearBookmarks = function() {
+  localStorage.clear('bookmarks');
+};
+// clearBookmarks();
 
